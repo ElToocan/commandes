@@ -22,7 +22,6 @@ class DashboardController extends Controller
         $data = [
             'page' => 'dashboard/add',
             'title' => 'Ajouter une commande',
-            'pageInclude' => 'dashboard/categoryPage'
         ];
         return view('blank', $data);
     }

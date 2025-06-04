@@ -2,15 +2,10 @@
     <div class="container">
         <div class="row">
 
-            <div>
+            <div class="col">
 
-                <livewire:type-formulaire/>
+                @livewire('commande-form')
 
-                @if(!empty($pageInclude))
-                    <div class="border border-dark rounded p-5 mt-5" style="min-height: 400px; min-width: 400px; border-width: 4px;">
-                        @include($pageInclude)
-                    </div>
-               @endif
             </div>
 
         </div>
