@@ -10,10 +10,21 @@ class DashboardController extends Controller
     public function index()
     {
         $data = [
-            'page' => 'test',
-            'title' => 'Dashboard',
+            'page' => 'dashboard/index',
+            'title' => 'En cours',
             'orders' => Order::all(),
         ];
         return view('blank', $data);
     }
+
+    public function add()
+    {
+        $data = [
+            'page' => 'dashboard/add',
+            'title' => 'Ajouter une commande'
+        ];
+        return view('blank', $data);
+    }
+
+
 }
