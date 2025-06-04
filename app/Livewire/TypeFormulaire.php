@@ -6,20 +6,25 @@ use Livewire\Component;
 
 class TypeFormulaire extends Component
 {
-    public string $type = 'surPlace';
+    public string $type = '';
 
     public array $form = [
-        'table' => '',
-        'address' => '',
+        'name' => '',
+        'phoneNumber' => '',
+        'deliveryTime' => '',
+        'personNumber' => '',
+        'tableNumber' => '',
     ];
 
-    public function typeFormulaire()
+    public function typeFormulaireSurPlace()
     {
-        if($this->type == 'surPlace'){
-            $this->type = 'emporter';
-        }elseif($this->type == 'emporter'){
-            $this->type = 'surPlace';
-        }
+        $this->type = 'surPlace';
+
+    }
+
+    public function typeFormulaireEmporter()
+    {
+        $this->type = 'emporter';
     }
 
     public function render()

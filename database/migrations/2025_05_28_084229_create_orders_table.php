@@ -9,7 +9,8 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('service');
+            $table->string('tableNumber');
+            $table->string('personNumber');
             $table->dateTime('deliveryTime')->nullable();
             $table->string('name')->nullable();
             $table->string('phoneNumber')->nullable();

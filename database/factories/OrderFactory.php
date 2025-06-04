@@ -13,7 +13,8 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'service' => $this->faker->word(),
+            'tableNumber' => $this->faker->randomNumber(),
+            'personNumber' => $this->faker->randomNumber(),
             'deliveryTime' => Carbon::now(),
             'name' => $this->faker->name(),
             'phoneNumber' => $this->faker->phoneNumber(),
