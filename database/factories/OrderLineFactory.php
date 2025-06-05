@@ -16,7 +16,6 @@ class OrderLineFactory extends Factory
     {
         return [
             'quantity' => $this->faker->randomNumber(),
-            'comment' => $this->faker->word(),
             'price' => $this->faker->randomFloat(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

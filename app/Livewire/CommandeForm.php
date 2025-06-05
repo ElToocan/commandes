@@ -5,6 +5,10 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\ProductCategories;
+use Illuminate\Support\Facades\DB;
+use App\Models\Order;
+use App\Models\OrderLine;
+
 
 class CommandeForm extends Component
 {
@@ -16,6 +20,7 @@ class CommandeForm extends Component
         'deliveryTime' => '',
         'personNumber' => '',
         'tableNumber' => '',
+        'comment' => '',
     ];
 
     public $categories;
@@ -115,49 +120,46 @@ class CommandeForm extends Component
             return $line['quantity'] * $line['unit_price'];
         });
 
-        DB::beginTransaction();
+        // Création de la commande avec les nouveaux champs
+        $order = Order::create([
+            'type' => $this->type,
+            'name' => $this->form['name'] ?? null,
+            'phone_number' => $this->form['phoneNumber'] ?? null,
+            'delivery_time' => $this->form['deliveryTime'] ?? null,
+            'table_number' => $this->form['tableNumber'] ?? null,
+            'person_number' => $this->form['personNumber'] ?? null,
+            'total_price' => $total,
+            'state' => 'en_attente', // ou 'draft', etc.
+            'paid' => false,
+        ]);
 
-        try {
-            // Création de la commande avec les nouveaux champs
-            $order = Order::create([
-                'type' => $this->type,
-                'name' => $this->form['name'] ?? null,
-                'phone_number' => $this->form['phoneNumber'] ?? null,
-                'delivery_time' => $this->form['deliveryTime'] ?? null,
-                'table_number' => $this->form['tableNumber'] ?? null,
-                'person_number' => $this->form['personNumber'] ?? null,
-                'total_price' => $total,
-                'state' => 'en_attente', // ou 'draft', etc.
-                'paid' => false,
+        // Création des lignes de commande sans total_price
+        foreach ($this->orderLines as $line) {
+            OrderLine::create([
+                'order_id' => $order->id,
+                'product_id' => $line['product_id'],
+                'quantity' => $line['quantity'],
+                'price' => $line['unit_price'] * $line['quantity'],
             ]);
-
-            // Création des lignes de commande sans total_price
-            foreach ($this->orderLines as $line) {
-                OrderLine::create([
-                    'order_id' => $order->id,
-                    'product_id' => $line['product_id'],
-                    'quantity' => $line['quantity'],
-                    'unit_price' => $line['unit_price'],
-                ]);
-            }
-
-            DB::commit();
-
-            // Réinitialisation du formulaire
-            $this->reset([
-                'type',
-                'form',
-                'selectedCategory',
-                'products',
-                'orderLines'
-            ]);
-
-            session()->flash('success', 'Commande enregistrée avec succès !');
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            session()->flash('error', 'Erreur : ' . $e->getMessage());
         }
+
+        // Réinitialisation du formulaire
+        $this->reset([
+            'type',
+            'form',
+            'selectedCategory',
+            'products',
+            'orderLines'
+        ]);
+
+        session()->flash('success', 'Commande enregistrée avec succès !');
+//        try {
+//
+//
+//        } catch (\Exception $e) {
+//            DB::rollBack();
+//            session()->flash('error', 'Erreur : ' . $e->getMessage());
+//        }
 
     }
 }

@@ -10,7 +10,6 @@ return new class extends Migration {
         Schema::create('order_lines', function (Blueprint $table) {
             $table->id();
             $table->integer('quantity');
-            $table->text('comment')->nullable();
             $table->float('price');
             $table->foreignId('order_id');
             $table->foreignId('product_id');

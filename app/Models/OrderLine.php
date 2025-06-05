@@ -19,4 +19,15 @@ class OrderLine extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    protected $fillable = [
+        'quantity',
+        'comment',
+        'price',
+        'order_id',
+        'product_id',
+    ];
+
+
+
 }

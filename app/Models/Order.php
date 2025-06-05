@@ -23,5 +23,16 @@ class Order extends Model
         return $this->hasMany(OrderLine::class);
     }
 
+    protected $fillable = [
+        'type',
+        'name',
+        'phone_number',
+        'delivery_time',
+        'table_number',
+        'person_number',
+        'total_price',
+        'state',
+        'paid',
+    ];
 
 }

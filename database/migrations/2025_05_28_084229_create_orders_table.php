@@ -9,15 +9,16 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('tableNumber');
-            $table->string('personNumber');
-            $table->dateTime('deliveryTime')->nullable();
+            $table->string('table_number');
+            $table->string('person_number');
+            $table->time('delivery_time')->nullable();
             $table->string('name')->nullable();
-            $table->string('phoneNumber')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->text('comment')->nullable();
             $table->string('state');
             $table->string('type');
             $table->boolean('paid');
-            $table->float('totalPrice');
+            $table->float('total_price');
             $table->timestamps();
         });
     }

@@ -40,6 +40,10 @@
         </div>
     @endif
 
+    <div  >
+        <label>Commentaire :</label><br>
+        <input wire:model="form.comment" type="text" class="form-control">
+    </div>
 
 {{--IA--}}
 
