@@ -14,6 +14,12 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
+                    <a href="{{ route('finish') }}" class="nav-link">Terminer</a>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
                     <a href="{{ route('pending') }}" class="nav-link">En cours</a>
                 </li>
 

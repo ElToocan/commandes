@@ -3,7 +3,7 @@
         <div class="row">
 
             @foreach($orders as $order)
-                @if($order->state == "en_attente" )
+                @if($order->state == "terminer" )
 
                     <!-- card left-->
                     <div class="col-lg-3">
@@ -13,7 +13,7 @@
                             </div>
                             <div class="card-body">
                                 <h6 class="card-text">{{$order->type == 'emporter' ? 'emporter' : 'sur place' }}</h6>
-                                <h6 class="card-text">{{$order->type == 'emporter' ? 'tel : '.$order->phone_number : 'Nombre de personne : '.$order->person_number }}</h6>
+                                <h6 class="card-text">{{$order->type == 'emporter' ? 'tel : '.$order->phone_number : 'Nombre de personne'.$order->person_number }}</h6>
                                 <h6 class="card-text">{{ $order->type == 'emporter' ? 'Heure de livraison : '.$order->delivery_time : ' '}}</h6>
                                 <br><br>
 
@@ -29,14 +29,8 @@
                                     <button onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');" type="submit" class="btn btn-danger">X</button>
                                 </form>
 
-                                {{--Bonton Valider--}}
-                                <form action="{{ route('orders.validate', $order->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="btn btn-success">Valider</button>
-                                </form>
 
-
+                                <a href="{{ route('update', $order->id) }}" class="btn btn-primary">Modifier</a>
                             </div>
                         </div>
                     </div>

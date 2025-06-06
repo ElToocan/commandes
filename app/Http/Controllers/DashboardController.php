@@ -26,5 +26,26 @@ class DashboardController extends Controller
         return view('blank', $data);
     }
 
+    public function finish()
+    {
+        $data = [
+            'page' => 'dashboard/finish',
+            'title' => 'Commande terminier',
+            'orders' => Order::all(),
+        ];
+
+        return view('blank', $data);
+    }
+
+    public function update($id)
+    {
+        $data = [
+            'page' => 'dashboard/update',
+            'title' => 'Modifier la commande n°'.Order::find($id)->id,
+            'order' => Order::find($id),
+        ];
+
+        return view('blank', $data);
+    }
 
 }
