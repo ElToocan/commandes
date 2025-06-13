@@ -9,12 +9,7 @@ class OrderController
     public function destroy($id)
     {
         Order::destroy($id);
-        $data = [
-            'page' => 'dashboard/order-view',
-            'title' => 'Commandes',
-            'orders' => Order::all(),
-        ];
-        return view('blank', $data);
+        return redirect('/view')->with('success', 'Commande supprimée avec succès');
     }
 
     public function validateOrder($id)

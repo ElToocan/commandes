@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\Order;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class OrderView extends Component
@@ -32,16 +34,46 @@ class OrderView extends Component
         }
     }
 
+    //AI
+
     public function render()
     {
-        return view('livewire.order-view', [
-            'orders' => Order::orderByRaw("
+        $now = Carbon::now();
+        $fourHoursAgo = $now->copy()->subHours(4);
+        $today = Carbon::today();
+
+        $orders = Order::select('*')
+            ->selectRaw("
+            CASE
+                WHEN type = 'emporter' THEN DATE_SUB(delivery_time, INTERVAL 15 MINUTE)
+                ELSE created_at
+            END AS sort_time
+        ")
+            ->whereRaw("
+            DATE(
                 CASE
-                    WHEN type = 'surPlace' THEN created_at
-                    WHEN type = 'emporter' THEN delivery_time
-                END DESC
-                ")->get(),
+                    WHEN type = 'emporter' THEN DATE_SUB(delivery_time, INTERVAL 15 MINUTE)
+                    ELSE created_at
+                END
+            ) = ?
+        ", [$today->toDateString()])
+            ->whereRaw("
+            (
+                CASE
+                    WHEN type = 'emporter' THEN DATE_SUB(delivery_time, INTERVAL 15 MINUTE)
+                    ELSE created_at
+                END
+            ) >= ?
+        ", [$fourHoursAgo->toDateTimeString()])
+            ->orderBy('sort_time', 'asc')
+            ->get();
+
+        return view('livewire.order-view', [
+            'orders' => $orders,
         ]);
     }
+
+
+
 
 }
