@@ -35,7 +35,7 @@
             </div>
             <div class="col-md-6">
                 <label>Heure de livraison</label>
-                <input wire:model="form.deliveryTime" type="time" class="form-control">
+                <input wire:model="form.deliveryTime" type="datetime-local" class="form-control">
             </div>
         </div>
     @endif
@@ -44,6 +44,7 @@
         <label>Commentaire :</label><br>
         <input wire:model="form.comment" type="text" class="form-control">
     </div>
+
 
 {{--IA--}}
 

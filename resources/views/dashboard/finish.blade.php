@@ -17,7 +17,8 @@
                                 <h6 class="card-text">{{ $order->type == 'emporter' ? 'Heure de livraison : '.$order->delivery_time : ' '}}</h6>
                                 <br><br>
 
-
+                            </div>
+                            <div class="card-footer">
                                 @foreach(\App\Models\OrderLine::where('order_id',$order->id)->get() as $orderLine)
                                     <p class="card-text"> {{ \App\Models\Product::where('id',$orderLine->product_id)->first()->name .' x'.$orderLine->quantity }} </p>
                                 @endforeach
@@ -29,9 +30,10 @@
                                     <button onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');" type="submit" class="btn btn-danger">X</button>
                                 </form>
 
+                                <a href="{{ route('orders.update', $order->id) }}" class="btn btn-primary">Modifier</a>
 
-                                <a href="{{ route('update', $order->id) }}" class="btn btn-primary">Modifier</a>
                             </div>
+
                         </div>
                     </div>
                 @endif

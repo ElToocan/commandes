@@ -7,15 +7,23 @@ use PHPUnit\Framework\ExecutionOrderDependency;
 
 class DashboardController extends Controller
 {
-    public function index()
+
+    public function blank()
     {
         $data = [
-            'page' => 'dashboard/index',
-            'title' => 'En cours',
-            'orders' => Order::all(),
+            'page' =>'blank',
+        ];
+    }
+    public function view()
+    {
+        $data = [
+            'page' => 'dashboard/order-view',
+            'title' => 'Commandes',
         ];
         return view('blank', $data);
     }
+
+
 
     public function add()
     {
@@ -26,16 +34,6 @@ class DashboardController extends Controller
         return view('blank', $data);
     }
 
-    public function finish()
-    {
-        $data = [
-            'page' => 'dashboard/finish',
-            'title' => 'Commande terminier',
-            'orders' => Order::all(),
-        ];
-
-        return view('blank', $data);
-    }
 
     public function update($id)
     {

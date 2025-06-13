@@ -30,6 +30,7 @@ class Order extends Model
         'delivery_time',
         'table_number',
         'person_number',
+        'comment',
         'total_price',
         'state',
         'paid',

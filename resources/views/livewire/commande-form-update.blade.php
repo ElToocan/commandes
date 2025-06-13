@@ -36,7 +36,7 @@
             </div>
             <div class="col-md-6">
                 <label>Heure de livraison</label>
-                <input wire:model="form.deliveryTime" type="time" class="form-control">
+                <input wire:model="form.deliveryTime" type="datetime-local" class="form-control">
             </div>
         </div>
     @endif
@@ -116,6 +116,9 @@
                     <button wire:click="updateCommande" class="btn btn-success">
                         Modifier
                     </button>
+
+                    <a href="{{ route('finish') }}" class="btn btn-secondary"> Retour </a>
+
                 </div>
             @endif
 

@@ -110,6 +110,7 @@ class CommandeForm extends Component
 
     public function validerCommande()
     {
+
         if (empty($this->orderLines) || !$this->type) {
             session()->flash('error', 'Veuillez compléter la commande.');
             return;
@@ -125,9 +126,10 @@ class CommandeForm extends Component
             'type' => $this->type,
             'name' => $this->form['name'] ?? null,
             'phone_number' => $this->form['phoneNumber'] ?? null,
-            'delivery_time' => $this->form['deliveryTime'] ?? null,
+            'delivery_time' => $this->form['deliveryTime'] === "" ? null : $this->form['deliveryTime'],
             'table_number' => $this->form['tableNumber'] ?? null,
             'person_number' => $this->form['personNumber'] ?? null,
+            'comment' => $this->form['comment'],
             'total_price' => $total,
             'state' => 'en_attente', // ou 'draft', etc.
             'paid' => false,

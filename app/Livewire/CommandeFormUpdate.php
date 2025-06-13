@@ -158,6 +158,7 @@ class CommandeFormUpdate extends Component
             'delivery_time' => $this->form['deliveryTime'] ?? null,
             'table_number' => $this->form['tableNumber'] ?? null,
             'person_number' => $this->form['personNumber'] ?? null,
+            'comment' => $this->form['comment'],
             'total_price' => $total,
             'state' => $this->state, // ou 'draft', etc.
             'paid' => false,
@@ -176,14 +177,9 @@ class CommandeFormUpdate extends Component
             ]);
         }
 
-        return redirect()->route('finish');
+        return redirect()->route('view');
 
     }
-
-
-
-
-
 
 
     public function render()

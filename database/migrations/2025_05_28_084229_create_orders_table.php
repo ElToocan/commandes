@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('table_number');
             $table->string('person_number');
-            $table->time('delivery_time')->nullable();
+            $table->dateTime('delivery_time')->nullable();
             $table->string('name')->nullable();
             $table->string('phone_number')->nullable();
             $table->text('comment')->nullable();

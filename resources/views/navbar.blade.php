@@ -12,15 +12,10 @@
 
         <div class="collapse navbar-collapse order-3" id="navbarCollapse">
             <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a href="{{ route('finish') }}" class="nav-link">Terminer</a>
-                </li>
 
-            </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="{{ route('pending') }}" class="nav-link">En cours</a>
+                    <a href="{{ route('view') }}" class="nav-link"> Commandes </a>
                 </li>
 
             </ul>

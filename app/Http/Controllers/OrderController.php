@@ -10,8 +10,8 @@ class OrderController
     {
         Order::destroy($id);
         $data = [
-            'page' => 'dashboard/index',
-            'title' => 'En cours',
+            'page' => 'dashboard/order-view',
+            'title' => 'Commandes',
             'orders' => Order::all(),
         ];
         return view('blank', $data);
@@ -26,10 +26,6 @@ class OrderController
         return redirect()->back()->with('success', 'Commande validée avec succès.');
     }
 
-    public function update($id)
-    {
-
-    }
 
 
 }
