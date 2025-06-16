@@ -19,7 +19,6 @@ class OrderLineFactory extends Factory
             'price' => $this->faker->randomFloat(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-
             'order_id' => Order::factory(),
             'product_id' => Product::factory(),
         ];

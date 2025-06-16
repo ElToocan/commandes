@@ -155,13 +155,8 @@ class CommandeForm extends Component
         ]);
 
         session()->flash('success', 'Commande enregistrée avec succès !');
-//        try {
-//
-//
-//        } catch (\Exception $e) {
-//            DB::rollBack();
-//            session()->flash('error', 'Erreur : ' . $e->getMessage());
-//        }
+
+        exit();
 
     }
 }

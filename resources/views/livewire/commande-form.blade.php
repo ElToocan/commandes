@@ -35,7 +35,7 @@
             </div>
             <div class="col-md-6">
                 <label>Heure de livraison</label>
-                <input wire:model="form.deliveryTime" type="datetime-local" class="form-control">
+                <input wire:model="form.deliveryTime" type="datetime-local" class="form-control" value="{{ now()->format('Y-m-d\TH:i') }}">
             </div>
         </div>
     @endif
@@ -48,7 +48,7 @@
 
 {{--IA--}}
 
-     <div class="border border-dark rounded p-5 mt-5">
+     <div class="border border-dark rounded p-2 mt-2">
         @if (!$selectedCategory)
             <div>
                 @foreach($categories as $category)
@@ -64,16 +64,15 @@
         @else
             <button
                 wire:click="$set('selectedCategory', null)"
-                class="btn btn-secondary mb-3"
+                class="btn btn-secondary m-1"
             >
-                Back to categories
+                <i class="fa fa-arrow-left"></i>
             </button>
         @endif
-             <div>
+
             @if(count($products) > 0)
                 @foreach($products as $product)
                     <button
-                        type="button"
                         class="btn btn-outline-success m-1"
                         wire:click="addProductToOrder({{ $product->id }})"
                     >
@@ -81,7 +80,7 @@
                     </button>
                 @endforeach
             @endif
-        </div>
+
              {{-- Affichage des lignes de commande --}}
         @if(count($orderLines) > 0)
             <hr>

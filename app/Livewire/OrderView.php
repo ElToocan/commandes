@@ -3,23 +3,38 @@
 namespace App\Livewire;
 
 use App\Models\Order;
+use App\Models\OrderLine;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class OrderView extends Component
 {
-    public $orderStateExpected = 'en_attente';
+    public $orderStateExpected;
 
     public bool $paid;
+
+
+    public function mount()
+    {
+        $this->orderStateExpected = session()->get('orderStateExpected', 'en_attente');
+    }
 
     public function orderStateExpectedWaiting()
     {
         $this->orderStateExpected = 'en_attente';
+        session()->put('orderStateExpected', $this->orderStateExpected);
     }
     public function orderStateExpectedFinish()
     {
         $this->orderStateExpected = 'terminer';
+        session()->put('orderStateExpected', $this->orderStateExpected);
+    }
+
+    public function toggleOrderLine($orderLineId)
+    {
+        $orderLine = OrderLine::find($orderLineId);
+        $orderLine->toggle();
     }
 
 

@@ -13,7 +13,7 @@ class Order extends Model
     protected function casts(): array
     {
         return [
-            'deliveryTime' => 'datetime',
+            'delivery_time' => 'datetime',
             'paid' => 'boolean',
         ];
     }

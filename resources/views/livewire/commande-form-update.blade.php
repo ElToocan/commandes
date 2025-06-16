@@ -117,7 +117,7 @@
                         Modifier
                     </button>
 
-                    <a href="{{ route('view') }}" class="btn btn-secondary"> Retour </a>
+                    <a href="{{ back()->getTargetUrl() }}" class="btn btn-secondary"> Retour </a>
 
                 </div>
             @endif

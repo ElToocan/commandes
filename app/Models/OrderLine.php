@@ -28,6 +28,9 @@ class OrderLine extends Model
         'product_id',
     ];
 
-
+    public function toggle() :void
+    {
+        $this->update(['status'=> !$this->status ]);
+    }
 
 }

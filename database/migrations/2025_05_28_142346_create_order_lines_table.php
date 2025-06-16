@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->integer('quantity');
             $table->float('price');
+            $table->boolean('status')->default(false);
             $table->foreignId('order_id');
             $table->foreignId('product_id');
             $table->timestamps();
