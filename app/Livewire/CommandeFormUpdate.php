@@ -23,7 +23,7 @@ class CommandeFormUpdate extends Component
         'comment' => '',
     ];
 
-    public string $state = 'terminer';
+    public string $state;
 
     public $categories;
     public $selectedCategory = null;
@@ -34,6 +34,7 @@ class CommandeFormUpdate extends Component
     {
         $this->order = Order::find($id);
         $this->type = $this->order->type;
+        $this->state = $this->order->state;
 
         // Utilise $this->order pour accéder aux propriétés
         $this->form['name'] = $this->order->name;

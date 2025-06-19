@@ -10,26 +10,11 @@ use Livewire\Component;
 
 class OrderView extends Component
 {
-    public $orderStateExpected;
+
+    public Order $order;
 
     public bool $paid;
 
-
-    public function mount()
-    {
-        $this->orderStateExpected = session()->get('orderStateExpected', 'en_attente');
-    }
-
-    public function orderStateExpectedWaiting()
-    {
-        $this->orderStateExpected = 'en_attente';
-        session()->put('orderStateExpected', $this->orderStateExpected);
-    }
-    public function orderStateExpectedFinish()
-    {
-        $this->orderStateExpected = 'terminer';
-        session()->put('orderStateExpected', $this->orderStateExpected);
-    }
 
     public function toggleOrderLine($orderLineId)
     {
@@ -38,54 +23,15 @@ class OrderView extends Component
     }
 
 
-    public function togglePayment($orderId)
+    public function togglePayment()
     {
-        $order = Order::find($orderId);
-        if ($order) {
-            $order->paid = !$order->paid;
-            $order->save();
-            // Recharger les commandes pour refléter le changement
-            $this->orders = Order::where('state', 'terminer')->get();
-        }
+            $this->order->paid = !$this->order->paid;
+            $this->order->save();
     }
-
-    //AI
 
     public function render()
     {
-        $now = Carbon::now();
-        $fourHoursAgo = $now->copy()->subHours(4);
-        $today = Carbon::today();
-
-        $orders = Order::select('*')
-            ->selectRaw("
-            CASE
-                WHEN type = 'emporter' THEN DATE_SUB(delivery_time, INTERVAL 15 MINUTE)
-                ELSE created_at
-            END AS sort_time
-        ")
-            ->whereRaw("
-            DATE(
-                CASE
-                    WHEN type = 'emporter' THEN DATE_SUB(delivery_time, INTERVAL 15 MINUTE)
-                    ELSE created_at
-                END
-            ) = ?
-        ", [$today->toDateString()])
-            ->whereRaw("
-            (
-                CASE
-                    WHEN type = 'emporter' THEN DATE_SUB(delivery_time, INTERVAL 15 MINUTE)
-                    ELSE created_at
-                END
-            ) >= ?
-        ", [$fourHoursAgo->toDateTimeString()])
-            ->orderBy('sort_time', 'asc')
-            ->get();
-
-        return view('livewire.order-view', [
-            'orders' => $orders,
-        ]);
+        return view('livewire.order-view');
     }
 
 

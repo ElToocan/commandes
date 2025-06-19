@@ -10,7 +10,7 @@ class OrderLine extends Model
 {
     use HasFactory;
 
-    public function orders(): BelongsTo
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
     }

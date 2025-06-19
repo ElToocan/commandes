@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\ProductCategories;
+use Carbon\Carbon;
 use PHPUnit\Framework\ExecutionOrderDependency;
 
 class DashboardController extends Controller
@@ -14,23 +17,55 @@ class DashboardController extends Controller
             'page' =>'blank',
         ];
     }
-    public function view()
+    public function view(?string $state = null)
     {
+
+        $orderStateExpected = $state ?? session()->get('orderStateExpected', 'en_attente');
+        session()->put('orderStateExpected', $orderStateExpected);
+
+        $orders = Order::where('state', $orderStateExpected);
+
+        if( Carbon::now()->format('H:i') < '17:00'  )
+        {
+            $orders->whereBetween('delivery_time',[Carbon::now()->format('Y-m-d 08:00:00'),Carbon::now()->format('Y-m-d 17:00:00')] );
+        }else{
+            $orders->whereBetween('delivery_time',[Carbon::now()->format('Y-m-d 17:00:00'),Carbon::tomorrow()->format('Y-m-d 08:00:00')] );
+        }
+
+
         $data = [
-            'page' => 'dashboard/order-view',
             'title' => 'Commandes',
+            'orders' => $orders->get()
         ];
-        return view('blank', $data);
+        return view('dashboard.order-view', $data);
     }
 
 
-    public function kitchen_view()
+    public function kitchen_view(?string $state = null, ?\DateTime $date = null )
     {
+        $orderStateExpected = $state ?? session()->get('orderStateExpected', 'en_attente');
+        session()->put('orderStateExpected', $orderStateExpected);
+
+        $orders = Order::where('state', $orderStateExpected);
+
+        if($date)
+        {
+            $orders->where('delivery_time',$date->format('Y-m-d' ));
+        }elseif( Carbon::now()->format('H:i') < '17:00'  )
+        {
+            $orders->whereBetween('delivery_time',[Carbon::now()->format('Y-m-d 08:00:00'),Carbon::now()->format('Y-m-d 17:00:00')] );
+        }else{
+            $orders->whereBetween('delivery_time',[Carbon::now()->format('Y-m-d 17:00:00'),Carbon::tomorrow()->format('Y-m-d 08:00:00')] );
+        }
+
+        $categories = ProductCategories::all();
+
         $data = [
             'page' => 'dashboard/kitchen-order-view',
             'title' => 'Commandes cuisine',
+            'orders' => $orders->get(),
         ];
-        return view('blank', $data);
+        return view('dashboard.kitchen-order-view', $data);
     }
 
 
@@ -41,7 +76,7 @@ class DashboardController extends Controller
             'page' => 'dashboard/add',
             'title' => 'Ajouter une commande',
         ];
-        return view('blank', $data);
+        return view('dashboard.add', $data);
     }
 
 
@@ -53,7 +88,7 @@ class DashboardController extends Controller
             'order' => Order::find($id),
         ];
 
-        return view('blank', $data);
+        return view('dashboard.update', $data);
     }
 
 }

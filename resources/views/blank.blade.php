@@ -30,7 +30,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="container">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0"><small> {{ $title }} </small></h1>
+                        <h1 class="m-0"><small> @yield('title') </small></h1>
                     </div><!-- /.col -->
 
                 </div><!-- /.row -->
@@ -39,7 +39,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- /.content-header -->
 
         <!-- Main content -->
-         @include($page)
+         @yield('content')
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
