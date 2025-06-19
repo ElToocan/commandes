@@ -15,6 +15,13 @@
 
             <ul class="navbar-nav">
                 <li class="nav-item">
+                    <a href="{{ route('kitchen-view') }}" class="nav-link"> Cuisine </a>
+                </li>
+
+            </ul>
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
                     <a href="{{ route('view') }}" class="nav-link"> Commandes </a>
                 </li>
 

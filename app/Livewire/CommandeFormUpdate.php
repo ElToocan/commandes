@@ -44,6 +44,7 @@ class CommandeFormUpdate extends Component
         $this->form['comment'] = $this->order->comment;
 
         $this->categories = ProductCategories::all();
+
         $this->orderLines = OrderLine::where('order_id', $id)
             ->with('product')
             ->get()

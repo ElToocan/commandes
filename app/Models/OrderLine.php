@@ -24,6 +24,7 @@ class OrderLine extends Model
         'quantity',
         'comment',
         'price',
+        'status',
         'order_id',
         'product_id',
     ];

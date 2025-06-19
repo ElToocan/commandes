@@ -156,7 +156,6 @@ class CommandeForm extends Component
 
         session()->flash('success', 'Commande enregistrée avec succès !');
 
-        exit();
 
     }
 }

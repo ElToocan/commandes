@@ -8,6 +8,9 @@ Route::get('/', [DashboardController::class,'blank']);
 
 Route::get('/view', [DashboardController::class,'view'])->name('view');
 
+Route::get('/kitchen-view', [DashboardController::class,'kitchen_view'])->name('kitchen-view');
+
+
 Route::get('/add', [DashboardController::class,'add'])->name('add');
 
 Route::get('/finish', [DashboardController::class,'finish'])->name('finish');

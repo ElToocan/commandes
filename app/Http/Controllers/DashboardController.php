@@ -24,6 +24,16 @@ class DashboardController extends Controller
     }
 
 
+    public function kitchen_view()
+    {
+        $data = [
+            'page' => 'dashboard/kitchen-order-view',
+            'title' => 'Commandes cuisine',
+        ];
+        return view('blank', $data);
+    }
+
+
 
     public function add()
     {
