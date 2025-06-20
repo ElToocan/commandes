@@ -14,13 +14,13 @@ class OrderFactory extends Factory
     {
         return [
             'table_number' => $this->faker->randomNumber(),
-            'person_number' => $this->faker->randomNumber(),
-            'delivery_time' => Carbon::now(),
+            'person_number' => random_int(2,6),
+            'delivery_time' => Carbon::today()->addHours(random_int(0,24))->format('Y-m-d H:i:s'),
             'name' => $this->faker->name(),
             'phone_number' => $this->faker->phoneNumber(),
             'comment' => $this->faker->text(),
-            'state' => $this->faker->word(),
-            'type' => $this->faker->word(),
+            'state' => collect(['en_attente','terminer'])->random(),
+            'type' => collect(['sur_place','emporter'])->random(),
             'paid' => $this->faker->boolean(),
             'total_price' => $this->faker->randomFloat(),
             'created_at' => Carbon::now(),

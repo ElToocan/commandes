@@ -10,7 +10,6 @@ Route::get('/view/{state?}', [DashboardController::class,'view'])->name('view');
 
 Route::get('/kitchen-view/{state?}', [DashboardController::class,'kitchen_view'])->name('kitchen-view');
 
-
 Route::get('/add', [DashboardController::class,'add'])->name('add');
 
 Route::get('/finish', [DashboardController::class,'finish'])->name('finish');

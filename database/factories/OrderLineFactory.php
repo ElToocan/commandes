@@ -15,7 +15,7 @@ class OrderLineFactory extends Factory
     public function definition(): array
     {
         return [
-            'quantity' => $this->faker->randomNumber(),
+            'quantity' => random_int(1,5),
             'price' => $this->faker->randomFloat(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

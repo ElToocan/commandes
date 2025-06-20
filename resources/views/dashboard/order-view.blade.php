@@ -40,9 +40,11 @@
             </div>
 
             <div class="row">
-                @foreach($orders as $order)
+                @forelse($orders as $order)
                     @livewire('order-view',['order'=> $order])
-                @endforeach
+                @empty
+                    Aucune commande
+                @endforelse
             </div>
 
         </div>

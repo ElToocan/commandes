@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductCategories;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,19 +25,18 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        Order::factory()
-            ->count(10)
-            ->create();
+        for ($i=0;$i<20;$i++) {
+            Order::factory()
+                ->count(1)
+                ->has(OrderLine::factory()->count(5))
+                ->create();
+        }
 
         ProductCategories::factory()
             ->count(2)
             ->has(Product::factory()->count(10), 'products')
             ->create();
 
-        OrderLine::factory()
-            ->count(10)
-            ->has(Order::factory()->count(15), 'orders')
-            ->has(Product::factory()->count(10), 'products')
-            ->create();
+
     }
 }

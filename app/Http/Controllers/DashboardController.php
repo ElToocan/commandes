@@ -17,6 +17,7 @@ class DashboardController extends Controller
         $data = [
             'page' => 'blank',
         ];
+        return view('blank')->with($data);
     }
 
     public function view( ?Request $request, ?string $state = null)
