@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductCategories;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use PHPUnit\Framework\ExecutionOrderDependency;
 
 class DashboardController extends Controller
@@ -14,22 +15,31 @@ class DashboardController extends Controller
     public function blank()
     {
         $data = [
-            'page' =>'blank',
+            'page' => 'blank',
         ];
     }
-    public function view(?string $state = null)
+
+    public function view( ?Request $request, ?string $state = null)
     {
+        $date = null;
+
+        if ($request !== null) {
+            $date = $request->input('date');
+        }
 
         $orderStateExpected = $state ?? session()->get('orderStateExpected', 'en_attente');
         session()->put('orderStateExpected', $orderStateExpected);
 
         $orders = Order::where('state', $orderStateExpected);
 
-        if( Carbon::now()->format('H:i') < '17:00'  )
-        {
-            $orders->whereBetween('delivery_time',[Carbon::now()->format('Y-m-d 08:00:00'),Carbon::now()->format('Y-m-d 17:00:00')] );
-        }else{
-            $orders->whereBetween('delivery_time',[Carbon::now()->format('Y-m-d 17:00:00'),Carbon::tomorrow()->format('Y-m-d 08:00:00')] );
+        if ($date !== null) {
+            $date = Carbon::parse($date);
+            $orders->whereDate('delivery_time', $date->format('Y-m-d') );
+        } elseif
+        (Carbon::now()->format('H:i') < '17:00') {
+            $orders->whereBetween('delivery_time', [Carbon::now()->format('Y-m-d 08:00:00'), Carbon::now()->format('Y-m-d 17:00:00')]);
+        } else {
+            $orders->whereBetween('delivery_time', [Carbon::now()->format('Y-m-d 17:00:00'), Carbon::tomorrow()->format('Y-m-d 08:00:00')]);
         }
 
 
@@ -41,21 +51,20 @@ class DashboardController extends Controller
     }
 
 
-    public function kitchen_view(?string $state = null, ?\DateTime $date = null )
+    public
+    function kitchen_view(?string $state = null)
     {
         $orderStateExpected = $state ?? session()->get('orderStateExpected', 'en_attente');
         session()->put('orderStateExpected', $orderStateExpected);
 
         $orders = Order::where('state', $orderStateExpected);
 
-        if($date)
-        {
-            $orders->where('delivery_time',$date->format('Y-m-d' ));
-        }elseif( Carbon::now()->format('H:i') < '17:00'  )
-        {
-            $orders->whereBetween('delivery_time',[Carbon::now()->format('Y-m-d 08:00:00'),Carbon::now()->format('Y-m-d 17:00:00')] );
-        }else{
-            $orders->whereBetween('delivery_time',[Carbon::now()->format('Y-m-d 17:00:00'),Carbon::tomorrow()->format('Y-m-d 08:00:00')] );
+        if ($date) {
+            $orders->where('delivery_time', $date->format('Y-m-d'));
+        } elseif (Carbon::now()->format('H:i') < '17:00') {
+            $orders->whereBetween('delivery_time', [Carbon::now()->format('Y-m-d 08:00:00'), Carbon::now()->format('Y-m-d 17:00:00')]);
+        } else {
+            $orders->whereBetween('delivery_time', [Carbon::now()->format('Y-m-d 17:00:00'), Carbon::tomorrow()->format('Y-m-d 08:00:00')]);
         }
 
         $categories = ProductCategories::all();
@@ -69,8 +78,8 @@ class DashboardController extends Controller
     }
 
 
-
-    public function add()
+    public
+    function add()
     {
         $data = [
             'page' => 'dashboard/add',
@@ -80,11 +89,12 @@ class DashboardController extends Controller
     }
 
 
-    public function update($id)
+    public
+    function update($id)
     {
         $data = [
             'page' => 'dashboard/update',
-            'title' => 'Modifier la commande n°'.Order::find($id)->id,
+            'title' => 'Modifier la commande n°' . Order::find($id)->id,
             'order' => Order::find($id),
         ];
 
