@@ -69,11 +69,11 @@
 
                 <br>
                 {{-- chack box payé / non-payée --}}
-                <div class="form-group clearfix">
-                    <div class="icheck-success d-inline">
-                        <input type="checkbox" id="checkboxPaid{{ $order->id }}"
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" id="checkboxPaid{{ $order->id }}" class="custom-control-input"
                                wire:click="togglePayment({{ $order->id }})" {{ $order->paid ? 'checked' : '' }} >
-                        <label for="checkboxPaid{{ $order->id }}">
+                        <label for="checkboxPaid{{ $order->id }}" class="custom-control-label">
                             Payé
                         </label>
                     </div>

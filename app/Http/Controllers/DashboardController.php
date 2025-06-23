@@ -60,9 +60,7 @@ class DashboardController extends Controller
 
         $orders = Order::where('state', $orderStateExpected);
 
-        if ($date) {
-            $orders->where('delivery_time', $date->format('Y-m-d'));
-        } elseif (Carbon::now()->format('H:i') < '17:00') {
+        if (Carbon::now()->format('H:i') < '17:00') {
             $orders->whereBetween('delivery_time', [Carbon::now()->format('Y-m-d 08:00:00'), Carbon::now()->format('Y-m-d 17:00:00')]);
         } else {
             $orders->whereBetween('delivery_time', [Carbon::now()->format('Y-m-d 17:00:00'), Carbon::tomorrow()->format('Y-m-d 08:00:00')]);

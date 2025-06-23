@@ -25,12 +25,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        for ($i=0;$i<20;$i++) {
-            Order::factory()
-                ->count(1)
-                ->has(OrderLine::factory()->count(5))
-                ->create();
-        }
+//        for ($i=0;$i<20;$i++) {
+//            Order::factory()
+//                ->count(1)
+//                ->has(OrderLine::factory()->count(5))
+//                ->create();
+//        }
 
         ProductCategories::factory()
             ->count(2)
